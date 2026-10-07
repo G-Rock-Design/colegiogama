@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gama Design System</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        geist: ['Geist', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9',
+                        secondary: '#8b5cf6',
+                        accent: '#14b8a6',
+                        surface: 'rgba(255, 255, 255, 0.04)',
+                        panel: 'rgba(5, 5, 8, 0.9)',
+                    },
+                    animation: {
+                        'fade-slide-in': 'fadeSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow-pulse': 'glowPulse 4s ease-in-out infinite',
+                        'spin-slow': 'spin 40s linear infinite',
+                    },
+                    keyframes: {
+                        fadeSlideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(40px) scale(0.98)', filter: 'blur(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)', filter: 'blur(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glowPulse: {
+                            '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
+                            '50%': { opacity: 0.8, transform: 'scale(1.1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base / Structural Classes inspired by Sora, Hanzo and Asimov */
+        body { background-color: #050505; color: #fff; overflow-x: hidden; }
+        
+        /* Layout Structure */
+        #ds-container { display: flex; min-height: 100vh; padding-top: 80px; position: relative; z-index: 10; }
+        #ds-side { width: 240px; flex: none; height: calc(100vh - 80px); position: sticky; top: 80px; padding: 32px 16px; border-right: 1px solid rgba(255,255,255,0.05); overflow-y: auto; background: rgba(5,5,8,0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        #ds-side a { display: block; padding: 10px 16px; border-radius: 8px; color: rgba(255,255,255,0.5); font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 500; transition: all 0.2s; margin-bottom: 4px; }
+        #ds-side a:hover, #ds-side a.is-active { color: #fff; background: rgba(255,255,255,0.08); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
+        #ds-main { flex: 1; padding: 40px 60px 120px; overflow-y: auto; }
+        
+        /* Section styling */
+        .ds-group { scroll-margin-top: 100px; padding-bottom: 64px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 64px; }
+        .ds-group:last-child { border-bottom: none; }
+        .ds-group > h2 { font-family: 'Geist', sans-serif; font-size: 28px; font-weight: 600; color: #fff; margin: 0 0 12px; display: flex; align-items: center; gap: 12px; letter-spacing: -0.02em; }
+        .ds-group > h2::before { content: ''; display: block; width: 24px; height: 3px; background: #38bdf8; border-radius: 3px; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+        .ds-sub { font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.5px; margin: 40px 0 20px; }
+        
+        /* Component display blocks */
+        .ds-type { display: grid; grid-template-columns: 220px minmax(0,1fr) 200px; gap: 24px; align-items: start; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+        .ds-type .role { font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 500; color: #fff; }
+        .ds-type .face { font-family: 'Geist', sans-serif; font-size: 12px; color: #38bdf8; margin-top: 4px; }
+        .ds-type .ds-meta { display: block; margin-top: 8px; font-family: ui-monospace, monospace; font-size: 11px; color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; width: fit-content; }
+        .ds-type .sizes { font-family: ui-monospace, monospace; font-size: 12px; color: rgba(255,255,255,0.5); text-align: right; }
+        
+        .ds-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .ds-swatch { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s, background 0.3s; }
+        .ds-swatch:hover { transform: translateY(-2px); background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); }
+        .ds-swatch .chip { height: 100px; border-radius: 10px; width: 100%; display: flex; align-items: flex-end; padding: 12px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
+        .ds-swatch .chip::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%); }
+        .ds-swatch strong { font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #fff; }
+        .ds-swatch .val { font-family: ui-monospace, monospace; font-size: 12px; color: #38bdf8; margin: 4px 0; }
+        .ds-swatch .use { font-family: 'Inter', sans-serif; font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+        
+        .ds-component-showcase { padding: 40px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; position: relative; overflow: hidden; margin-bottom: 24px; display: flex; justify-content: center; align-items: center; min-height: 200px; }
+        .ds-component-showcase::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(56,189,248,0.05) 0%, transparent 70%); pointer-events: none; }
+        
+        /* Shared Custom Utilities */
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); }
+        .glass-nav { background: rgba(5, 5, 8, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+        .text-glow { text-shadow: 0 0 30px rgba(56, 189, 248, 0.6); }
+        .bg-glow-accent { box-shadow: 0 0 40px rgba(56, 189, 248, 0.4); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+        @media (max-width: 1024px) {
+            #ds-side { display: none; }
+            #ds-main { padding: 32px 24px; }
+            .ds-type { grid-template-columns: 1fr; gap: 16px; }
+            .ds-type .sizes { text-align: left; }
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-white font-sans antialiased selection:bg-sky-500/30 selection:text-sky-200">
+
+    <!-- Global Background Animation -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-sky-600/10 blur-[120px] animate-float"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-purple-600/10 blur-[150px] animate-float" style="animation-delay: -3s;"></div>
+        <div class="absolute top-[30%] left-[50%] w-[40vw] h-[40vw] rounded-full bg-teal-500/10 blur-[130px] animate-glow-pulse"></div>
+        <!-- Grid pattern overlay -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] opacity-60"></div>
+    </div>
+
+    <!-- Navigation (Asimov + Hanzo style) -->
+    <header class="catalog-nav glass-nav fixed top-0 w-full h-[80px] z-50 px-6 md:px-10 flex items-center justify-between">
+        <div class="flex items-center gap-10">
+            <a href="#hero" class="text-2xl font-geist font-bold tracking-tighter text-white flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-purple-600 grid place-items-center shadow-[0_0_20px_rgba(56,189,248,0.5)]">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                GAMA <span class="text-sky-400 font-light">DS</span>
+            </a>
+            <ul class="catalog-links hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                <li><a href="#hero" class="px-5 py-2 rounded-full text-sm font-medium text-white bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition-all">Overview</a></li>
+                <li><a href="#typography" class="px-5 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-all">Components</a></li>
+            </ul>
+        </div>
+        <div class="theme-control hidden md:flex items-center gap-4">
+            <button class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </button>
+            <button class="group px-6 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 shadow-[0_0_25px_rgba(56,189,248,0.4)] transition-all hover:scale-105 flex items-center gap-2">
+                Download Assets <svg class="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- First Fold: Hero Demonstration -->
+    <section id="hero" class="relative z-10 min-h-screen flex items-center justify-center pt-24 pb-16 px-6 overflow-hidden">
+        <div class="max-w-6xl mx-auto text-center relative w-full">
+            <!-- Decorative rings -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full pointer-events-none"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] border border-white/5 rounded-full pointer-events-none border-dashed opacity-40 animate-spin-slow"></div>
+            
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-medium mb-10 opacity-0 animate-fade-slide-in backdrop-blur-md">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                </span>
+                Gama Design System 1.0 is live
+            </div>
+            
+            <h1 class="text-7xl md:text-[7rem] font-geist font-bold tracking-tighter text-white mb-6 opacity-0 animate-fade-slide-in leading-none" style="animation-delay: 0.1s;">
+                Design <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-purple-400 to-sky-400 text-glow">For The Future</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-14 font-inter leading-relaxed opacity-0 animate-fade-slide-in" style="animation-delay: 0.2s;">
+                Um ecossistema visual construído com foco em estética premium, vidro fosco escuro, animações fluidas e detalhes luminosos para interfaces que inspiram.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 opacity-0 animate-fade-slide-in" style="animation-delay: 0.3s;">
+                <button class="group relative px-8 py-4 bg-white text-black font-geist font-bold text-lg rounded-full overflow-hidden transition-transform hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+                    <div class="absolute inset-0 bg-gradient-to-r from-sky-200 to-purple-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <span class="relative z-10 flex items-center gap-2">Explorar Componentes <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></span>
+                </button>
+                <button class="group px-8 py-4 glass-panel text-white font-geist font-medium text-lg rounded-full hover:bg-white/10 transition-all hover:border-white/20">
+                    Ver Diretrizes
+                </button>
+            </div>
+            
+            <!-- Hero Floating Components Showcase -->
+            <div class="mt-24 relative h-[350px] w-full max-w-5xl mx-auto opacity-0 animate-fade-slide-in" style="animation-delay: 0.5s;">
+                <!-- Floating Element 1 (Left) -->
+                <div class="absolute top-12 left-0 md:left-[5%] w-64 glass-panel p-5 rounded-2xl animate-float border-t border-l border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.4)]" style="animation-delay: 0s; transform: rotate(-4deg);">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-500 to-sky-500 p-[2px]">
+                            <div class="w-full h-full bg-black rounded-full border border-white/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="h-3 w-24 bg-white/20 rounded-full mb-2"></div>
+                            <div class="h-2 w-16 bg-white/10 rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="h-2 w-full bg-white/10 rounded-full"></div>
+                        <div class="h-2 w-5/6 bg-white/10 rounded-full"></div>
+                        <div class="h-2 w-4/6 bg-white/10 rounded-full"></div>
+                    </div>
+                </div>
+                
+                <!-- Floating Element 2 (Center) -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-80 glass-panel p-6 rounded-3xl animate-float border border-sky-500/30 shadow-[0_30px_60px_rgba(0,0,0,0.6),_inset_0_1px_0_rgba(255,255,255,0.2)] z-10 backdrop-blur-3xl bg-black/40" style="animation-delay: -2s;">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-geist font-semibold text-lg text-white">Performance</h3>
+                        <span class="flex h-3 w-3 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                        </span>
+                    </div>
+                    <div class="flex items-end gap-3 h-28 mb-6">
+                        <div class="w-full bg-sky-500/20 rounded-t-md h-[40%] relative hover:bg-sky-500/30 transition-colors"><div class="absolute top-0 w-full h-[2px] bg-sky-400"></div></div>
+                        <div class="w-full bg-sky-500/20 rounded-t-md h-[70%] relative hover:bg-sky-500/30 transition-colors"><div class="absolute top-0 w-full h-[2px] bg-sky-400"></div></div>
+                        <div class="w-full bg-sky-500/40 rounded-t-md h-[100%] relative bg-glow-accent"><div class="absolute top-0 w-full h-[2px] bg-sky-300 shadow-[0_0_12px_#38bdf8]"></div></div>
+                        <div class="w-full bg-sky-500/20 rounded-t-md h-[60%] relative hover:bg-sky-500/30 transition-colors"><div class="absolute top-0 w-full h-[2px] bg-sky-400"></div></div>
+                        <div class="w-full bg-sky-500/20 rounded-t-md h-[80%] relative hover:bg-sky-500/30 transition-colors"><div class="absolute top-0 w-full h-[2px] bg-sky-400"></div></div>
+                    </div>
+                    <button class="w-full py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors">Ver Relatório Completo</button>
+                </div>
+                
+                <!-- Floating Element 3 (Right) -->
+                <div class="absolute top-20 right-0 md:right-[5%] w-64 glass-panel p-5 rounded-2xl animate-float border border-purple-500/20 shadow-[0_20px_40px_rgba(0,0,0,0.4)]" style="animation-delay: -4s; transform: rotate(5deg);">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-bold text-purple-400 px-2.5 py-1 bg-purple-500/10 rounded-md uppercase tracking-wider">Update</span>
+                        <div class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center">
+                            <svg class="w-3 h-3 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </div>
+                    </div>
+                    <p class="text-sm text-white/80 leading-relaxed font-inter mb-4">O design system foi atualizado. Novos componentes interativos disponíveis.</p>
+                    <div class="flex gap-2">
+                        <div class="h-8 w-1/2 bg-white/5 rounded-lg"></div>
+                        <div class="h-8 w-1/2 bg-purple-500/20 rounded-lg border border-purple-500/30"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <div id="ds-container" class="max-w-[1500px] mx-auto w-full">
+        <!-- Sidebar Navigation -->
+        <aside id="ds-side">
+            <div class="mb-8 px-2">
+                <div class="text-[11px] font-bold text-white/40 uppercase tracking-[0.2em] mb-4">Fundação</div>
+                <a href="#typography" class="is-active">Tipografia</a>
+                <a href="#colors">Cores</a>
+                <a href="#icons">Ícones</a>
+                <a href="#animations">Animações</a>
+            </div>
+            <div class="mb-8 px-2">
+                <div class="text-[11px] font-bold text-white/40 uppercase tracking-[0.2em] mb-4">Componentes</div>
+                <a href="#buttons">Buttons</a>
+                <a href="#inputs">Inputs & Forms</a>
+                <a href="#cards">Cards & Surfaces</a>
+                <a href="#navbars">Navbars</a>
+                <a href="#badges">Badges & Tags</a>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main id="ds-main">
+            
+            <!-- 2. Typography -->
+            <section id="typography" class="ds-group opacity-0 animate-fade-slide-in">
+                <h2>Tipografia</h2>
+                <p class="text-white/60 mb-10 max-w-3xl leading-relaxed text-lg font-inter">
+                    Utilizamos a <strong>Geist</strong> para títulos pela sua geometria moderna e forte presença, e a <strong>Inter</strong> para o corpo do texto garantindo máxima legibilidade em tamanhos menores.
+                </p>
+                
+                <h3 class="ds-sub">Display & Headings</h3>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Heading 1</div>
+                        <div class="face">Geist · 700 (Bold)</div>
+                        <code class="ds-meta">text-5xl md:text-7xl · tracking-tighter</code>
+                    </div>
+                    <div class="sample">
+                        <h1 class="text-5xl md:text-7xl font-geist font-bold tracking-tighter text-white">Criando o Futuro</h1>
+                    </div>
+                    <div class="sizes">72px | 48px<br><span class="text-white/30 text-[10px]">line-height: 1</span></div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Heading 2</div>
+                        <div class="face">Geist · 600 (Semibold)</div>
+                        <code class="ds-meta">text-4xl md:text-5xl · tracking-tight</code>
+                    </div>
+                    <div class="sample">
+                        <h2 class="text-4xl md:text-5xl font-geist font-semibold tracking-tight text-white">Componentes Modulares</h2>
+                    </div>
+                    <div class="sizes">48px | 36px<br><span class="text-white/30 text-[10px]">line-height: 1.1</span></div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Heading 3</div>
+                        <div class="face">Geist · 500 (Medium)</div>
+                        <code class="ds-meta">text-2xl md:text-3xl · tracking-tight</code>
+                    </div>
+                    <div class="sample">
+                        <h3 class="text-2xl md:text-3xl font-geist font-medium tracking-tight text-white">Estrutura de Dados</h3>
+                    </div>
+                    <div class="sizes">30px | 24px<br><span class="text-white/30 text-[10px]">line-height: 1.2</span></div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Heading 4 - 6</div>
+                        <div class="face">Geist · 500 (Medium)</div>
+                        <code class="ds-meta">text-xl · text-lg · text-base</code>
+                    </div>
+                    <div class="sample">
+                        <h4 class="text-xl font-geist font-medium text-white mb-3">Heading 4</h4>
+                        <h5 class="text-lg font-geist font-medium text-white/90 mb-3">Heading 5</h5>
+                        <h6 class="text-base font-geist font-medium text-white/80">Heading 6</h6>
+                    </div>
+                    <div class="sizes">20px | 18px | 16px<br><span class="text-white/30 text-[10px]">line-height: 1.4</span></div>
+                </div>
+
+                <h3 class="ds-sub mt-16">Body & UI</h3>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Body Large</div>
+                        <div class="face">Inter · 400 (Regular)</div>
+                        <code class="ds-meta">text-lg · leading-relaxed</code>
+                    </div>
+                    <div class="sample">
+                        <p class="text-lg font-inter text-white/80 leading-relaxed">
+                            O design system provê as fundações para construir experiências de alta qualidade e interfaces que encantam.
+                        </p>
+                    </div>
+                    <div class="sizes">18px</div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Body Default</div>
+                        <div class="face">Inter · 400 (Regular)</div>
+                        <code class="ds-meta">text-base · leading-relaxed</code>
+                    </div>
+                    <div class="sample">
+                        <p class="text-base font-inter text-white/70 leading-relaxed">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Ut enim ad minim veniam.
+                        </p>
+                    </div>
+                    <div class="sizes">16px</div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Body Small / Helper</div>
+                        <div class="face">Inter · 400 (Regular)</div>
+                        <code class="ds-meta">text-sm · text-white/50</code>
+                    </div>
+                    <div class="sample">
+                        <p class="text-sm font-inter text-white/50">Esta é uma mensagem de ajuda ou texto auxiliar para inputs e meta-dados da interface.</p>
+                    </div>
+                    <div class="sizes">14px</div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Label & Caption</div>
+                        <div class="face">Geist · 600 (Semibold)</div>
+                        <code class="ds-meta">text-xs · uppercase · tracking-wider</code>
+                    </div>
+                    <div class="sample">
+                        <span class="text-xs font-geist font-semibold uppercase tracking-wider text-sky-400">Status System</span>
+                    </div>
+                    <div class="sizes">12px</div>
+                </div>
+            </section>
+
+            <!-- 3. Colors -->
+            <section id="colors" class="ds-group opacity-0 animate-fade-slide-in">
+                <h2>Sistema de Cores</h2>
+                <p class="text-white/60 mb-10 max-w-3xl leading-relaxed text-lg font-inter">
+                    Focado em um ambiente "Dark Mode First", utilizando contrastes sutis, cores de acento vibrantes e feedback semântico para guiar o usuário.
+                </p>
+
+                <h3 class="ds-sub">Primary & Accent</h3>
+                <div class="ds-swatches">
+                    <div class="ds-swatch group">
+                        <div class="chip" style="background: #0ea5e9;">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-white text-lg">Sky 500</span>
+                        </div>
+                        <div>
+                            <strong>Primary / Accent</strong>
+                            <div class="val">Hex: #0ea5e9 | RGB: 14, 165, 233</div>
+                            <div class="use">Ações principais, botões primários, links, glows e destaques visuais da marca.</div>
+                        </div>
+                    </div>
+                    <div class="ds-swatch">
+                        <div class="chip" style="background: #38bdf8;">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-black text-lg">Sky 400</span>
+                        </div>
+                        <div>
+                            <strong>Primary Light</strong>
+                            <div class="val">Hex: #38bdf8 | RGB: 56, 189, 248</div>
+                            <div class="use">Estados de hover, textos destacados (como no Hero), ícones ativos.</div>
+                        </div>
+                    </div>
+                    <div class="ds-swatch">
+                        <div class="chip" style="background: #8b5cf6;">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-white text-lg">Purple 500</span>
+                        </div>
+                        <div>
+                            <strong>Secondary Accent</strong>
+                            <div class="val">Hex: #8b5cf6 | RGB: 139, 92, 246</div>
+                            <div class="use">Gradientes decorativos, badges premium, variações visuais criativas.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="ds-sub mt-12">Neutrals & Surfaces</h3>
+                <div class="ds-swatches">
+                    <div class="ds-swatch">
+                        <div class="chip border border-white/20" style="background: #050505;">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-white text-lg">Background</span>
+                        </div>
+                        <div>
+                            <strong>Page Background</strong>
+                            <div class="val">Hex: #050505</div>
+                            <div class="use">Fundo principal da aplicação (quase preto puro). Promove alto contraste para elementos brilhantes.</div>
+                        </div>
+                    </div>
+                    <div class="ds-swatch">
+                        <div class="chip" style="background: rgba(255,255,255,0.03);">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-white text-lg">Surface 1</span>
+                        </div>
+                        <div>
+                            <strong>Glass Panel (Base)</strong>
+                            <div class="val">rgba(255, 255, 255, 0.03)</div>
+                            <div class="use">Fundo de cards, painéis e navbars. Requer <code>backdrop-blur</code> para o efeito vidro fosco.</div>
+                        </div>
+                    </div>
+                    <div class="ds-swatch">
+                        <div class="chip" style="background: rgba(255,255,255,0.1);">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-white text-lg">Border / Hover</span>
+                        </div>
+                        <div>
+                            <strong>Divider & Hover</strong>
+                            <div class="val">rgba(255, 255, 255, 0.1)</div>
+                            <div class="use">Bordas de cards, divisores de seção sutil, estado hover de itens em listas.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="ds-sub mt-12">Feedback (Semantic)</h3>
+                <div class="ds-swatches">
+                    <div class="ds-swatch">
+                        <div class="chip" style="background: #10b981;">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-white text-lg">Emerald</span>
+                        </div>
+                        <div>
+                            <strong>Positive / Success</strong>
+                            <div class="val">Hex: #10b981</div>
+                            <div class="use">Mensagens de sucesso, status ativo, valores positivos financeiros.</div>
+                        </div>
+                    </div>
+                    <div class="ds-swatch">
+                        <div class="chip" style="background: #ef4444;">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-white text-lg">Red</span>
+                        </div>
+                        <div>
+                            <strong>Negative / Error</strong>
+                            <div class="val">Hex: #ef4444</div>
+                            <div class="use">Mensagens de erro, ações destrutivas (ex: deletar), alertas críticos.</div>
+                        </div>
+                    </div>
+                    <div class="ds-swatch">
+                        <div class="chip" style="background: #f59e0b;">
+                            <span class="absolute top-3 left-3 font-geist font-bold text-white text-lg">Amber</span>
+                        </div>
+                        <div>
+                            <strong>Warning</strong>
+                            <div class="val">Hex: #f59e0b</div>
+                            <div class="use">Avisos, status pendente ou processos em andamento.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Icons -->
+            <section id="icons" class="ds-group opacity-0 animate-fade-slide-in">
+                <h2>Ícones</h2>
+                <p class="text-white/60 mb-8 font-inter">Padrão de linha (stroke) suave com <code>stroke-width="1.5"</code> ou <code>2</code>. Tamanho padrão recomendado é <code>w-5 h-5</code> para UI geral.</p>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-white/5 hover:-translate-y-1 transition-all cursor-pointer">
+                        <svg class="w-7 h-7 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        <span class="text-[11px] text-white/50 font-mono">Home</span>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-white/5 hover:-translate-y-1 transition-all cursor-pointer">
+                        <svg class="w-7 h-7 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <span class="text-[11px] text-white/50 font-mono">Settings</span>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-white/5 hover:-translate-y-1 transition-all cursor-pointer">
+                        <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="text-[11px] text-white/50 font-mono">Success</span>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-white/5 hover:-translate-y-1 transition-all cursor-pointer">
+                        <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span class="text-[11px] text-white/50 font-mono">Fast / Zap</span>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-white/5 hover:-translate-y-1 transition-all cursor-pointer">
+                        <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <span class="text-[11px] text-white/50 font-mono">Warning</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Animations -->
+            <section id="animations" class="ds-group opacity-0 animate-fade-slide-in">
+                <h2>Animações & Micro-interações</h2>
+                <p class="text-white/60 mb-8 max-w-3xl font-inter">
+                    Elementos interativos devem parecer "vivos". Usamos transformações suaves em hovers, glow pulsing para fundos e fade-slide-in para surgimento de seções na rolagem.
+                </p>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Fade Slide In</div>
+                        <code class="ds-meta">.animate-fade-slide-in</code>
+                    </div>
+                    <div class="sample glass-panel p-5 rounded-xl border-l-2 border-l-sky-500 font-inter text-sm text-white/80">
+                        Aparecimento suave de baixo para cima com desfoque inicial. Usado em todas as seções e títulos principais.
+                    </div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Floating</div>
+                        <code class="ds-meta">.animate-float</code>
+                    </div>
+                    <div class="sample glass-panel p-5 rounded-xl border-l-2 border-l-purple-500 font-inter text-sm text-white/80">
+                        Movimento contínuo vertical tipo levitação (6s infinito). Usado em cards demonstrativos do Hero e orbs de background.
+                    </div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Glow Pulse</div>
+                        <code class="ds-meta">.animate-glow-pulse</code>
+                    </div>
+                    <div class="sample glass-panel p-5 rounded-xl border-l-2 border-l-teal-500 font-inter text-sm text-white/80">
+                        Pulsação suave de opacidade e escala para dar vida a backgrounds atmosféricos luminosos.
+                    </div>
+                </div>
+                <div class="ds-type">
+                    <div>
+                        <div class="role">Hover Micro-interactions</div>
+                        <code class="ds-meta">hover:-translate-y-1<br>hover:scale-105</code>
+                    </div>
+                    <div class="sample glass-panel p-5 rounded-xl flex items-center gap-6">
+                        <div class="w-14 h-14 bg-sky-500 rounded-2xl transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(14,165,233,0.4)] cursor-pointer grid place-items-center"><span class="text-xs font-bold text-white">Hover</span></div>
+                        <div class="text-sm font-inter text-white/60 max-w-xs">Passe o mouse no quadrado azul.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. UI Components -->
+            <section id="buttons" class="ds-group opacity-0 animate-fade-slide-in">
+                <h2>Buttons</h2>
+                <div class="ds-component-showcase flex-wrap gap-6">
+                    <!-- Solid Primary -->
+                    <button class="px-7 py-3.5 rounded-full bg-sky-500 hover:bg-sky-400 text-white font-geist font-semibold shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(14,165,233,0.5)]">
+                        Primary Action
+                    </button>
+                    <!-- Glass Outline -->
+                    <button class="px-7 py-3.5 rounded-full glass-panel text-white font-geist font-medium hover:bg-white/10 hover:border-white/20 transition-all shadow-none hover:shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
+                        Secondary Glass
+                    </button>
+                    <!-- Gradient Glow -->
+                    <button class="group relative px-7 py-3.5 rounded-full overflow-hidden font-geist font-semibold text-white transition-transform hover:scale-105 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+                        <div class="absolute inset-0 bg-gradient-to-r from-sky-500 to-purple-600 opacity-90 group-hover:opacity-100 transition-opacity"></div>
+                        <span class="relative z-10 flex items-center gap-2">Premium Feature <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></span>
+                    </button>
+                    <!-- Ghost -->
+                    <button class="px-5 py-2.5 rounded-lg text-white/60 hover:text-white hover:bg-white/5 font-geist font-medium transition-colors">
+                        Ghost Button
+                    </button>
+                </div>
+                <p class="ds-meta mt-4">Padrão de bordas arredondadas (full para botões principais). Efeitos de glow no primary.</p>
+            </section>
+
+            <section id="inputs" class="ds-group opacity-0 animate-fade-slide-in">
+                <h2>Inputs & Forms</h2>
+                <div class="ds-component-showcase flex-col gap-6 items-start w-full max-w-2xl mx-auto">
+                    <div class="w-full">
+                        <label class="block text-sm font-geist font-medium text-white/70 mb-2">Email Address</label>
+                        <input type="email" placeholder="nome@exemplo.com" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-white/30 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all shadow-[inset_0_2px_10px_rgba(0,0,0,0.4)] backdrop-blur-md">
+                    </div>
+                    <div class="w-full relative">
+                        <label class="block text-sm font-geist font-medium text-white/70 mb-2">Search Input</label>
+                        <div class="absolute top-[38px] left-4 text-white/40">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <input type="text" placeholder="Search components..." class="w-full bg-white/5 border border-white/10 rounded-full pl-12 pr-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-sky-500 focus:bg-white/10 transition-all shadow-[inset_0_1px_2px_rgba(255,255,255,0.05)]">
+                    </div>
+                    <div class="flex items-center gap-3 mt-4">
+                        <div class="relative flex items-center">
+                            <input type="checkbox" class="peer sr-only" id="custom-check">
+                            <label for="custom-check" class="w-5 h-5 rounded border border-white/20 bg-white/5 peer-checked:bg-sky-500 peer-checked:border-sky-500 flex items-center justify-center cursor-pointer transition-colors shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]">
+                                <svg class="w-3.5 h-3.5 text-white opacity-0 peer-checked:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </label>
+                        </div>
+                        <label for="custom-check" class="text-sm font-inter text-white/80 cursor-pointer select-none hover:text-white transition-colors">Concordo com os Termos & Condições</label>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cards" class="ds-group opacity-0 animate-fade-slide-in">
+                <h2>Cards & Surfaces</h2>
+                <div class="ds-component-showcase flex-col lg:flex-row gap-8 items-stretch">
+                    <!-- Standard Glass Card -->
+                    <div class="glass-panel p-8 rounded-[2rem] w-full max-w-sm hover:-translate-y-2 transition-transform duration-500 flex flex-col">
+                        <div class="w-14 h-14 rounded-2xl bg-sky-500/20 border border-sky-500/20 text-sky-400 flex items-center justify-center mb-6">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-geist font-semibold text-white mb-3">Armazenamento</h3>
+                        <p class="text-base text-white/60 font-inter mb-8 flex-1 leading-relaxed">Card de conteúdo padrão utilizando a classe glass-panel com backdrop-blur acentuado e bordas sutis refletivas.</p>
+                        <a href="#" class="text-sm font-bold text-sky-400 hover:text-sky-300 flex items-center gap-1.5 transition-colors">Descobrir como <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
+                    </div>
+                    
+                    <!-- Highlight/Premium Card -->
+                    <div class="relative p-8 rounded-[2rem] w-full max-w-sm bg-[#0a0a0f] border border-purple-500/40 overflow-hidden group hover:-translate-y-2 transition-transform duration-500 shadow-[0_20px_50px_rgba(139,92,246,0.15)] flex flex-col">
+                        <!-- BG Glow inside card -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        
+                        <div class="relative z-10 flex-1 flex flex-col">
+                            <div class="flex justify-between items-start mb-6">
+                                <h3 class="text-2xl font-geist font-semibold text-white">Plano Pro</h3>
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30 uppercase tracking-widest">Popular</span>
+                            </div>
+                            <div class="text-5xl font-geist font-bold text-white mb-8 tracking-tighter">$29<span class="text-lg text-white/40 font-medium tracking-normal">/mo</span></div>
+                            <ul class="space-y-4 mb-8 text-sm text-white/70 font-inter flex-1">
+                                <li class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center"><svg class="w-3 h-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div> Recursos Ilimitados</li>
+                                <li class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center"><svg class="w-3 h-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div> Suporte Prioritário 24/7</li>
+                                <li class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center"><svg class="w-3 h-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div> Acesso Antecipado a Beta</li>
+                            </ul>
+                            <button class="w-full py-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold transition-colors shadow-[0_0_20px_rgba(139,92,246,0.3)]">Assinar Agora</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="badges" class="ds-group opacity-0 animate-fade-slide-in">
+                <h2>Badges & Tags</h2>
+                <div class="ds-component-showcase flex-wrap gap-4">
+                    <span class="px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider border border-white/10 bg-white/5 text-white/80">Default Tag</span>
+                    <span class="px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-sky-500/10 text-sky-400 border border-sky-500/20">Nova Feature</span>
+                    <span class="px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Online</span>
+                    <span class="px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">Pendente</span>
+                    <span class="px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">Falha</span>
+                    <span class="px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-purple-500/20 to-sky-500/20 text-white border border-white/10 shadow-[0_0_10px_rgba(139,92,246,0.2)]">Premium</span>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Smooth scrolling for sidebar links
+        document.querySelectorAll('#ds-side a, header a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if(targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        // Update active state in sidebar if it's a sidebar link
+                        if(this.closest('#ds-side')) {
+                            document.querySelectorAll('#ds-side a').forEach(a => a.classList.remove('is-active'));
+                            this.classList.add('is-active');
+                        }
+                    }
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations (fade-slide-in)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-slide-in');
+                    entry.target.style.opacity = '1';
+                    observer.unobserve(entry.target); // only animate once
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.ds-group').forEach(group => {
+            observer.observe(group);
+        });
+    </script>
+</body>
+</html>

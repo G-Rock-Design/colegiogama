@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colégio Gama | Cada descoberta abre um novo futuro</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gama: {
+                            marinho: '#082F57',
+                            royal: '#0755B5',
+                            vibrante: '#008ED6',
+                            claro: '#8CD3F5',
+                            branco: '#FFFFFF',
+                            amarelo: '#FFD029',
+                            azulado: '#F2F7FC',
+                            profundo: '#172B45',
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Geist', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeSlideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.7', transform: 'scale(1.1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Button Glow Effects */
+        @keyframes pulseGlowBtn {
+            0% { box-shadow: 0 0 10px rgba(7, 85, 181, 0.4), 0 0 20px rgba(7, 85, 181, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(7, 85, 181, 0.8), 0 0 45px rgba(7, 85, 181, 0.5); }
+            100% { box-shadow: 0 0 10px rgba(7, 85, 181, 0.4), 0 0 20px rgba(7, 85, 181, 0.2); }
+        }
+        .btn-glow-pulse {
+            animation: pulseGlowBtn 2.5s infinite ease-in-out;
+        }
+        .btn-glow-pulse:hover {
+            animation: none;
+            box-shadow: 0 0 25px rgba(7, 85, 181, 0.8), 0 0 40px rgba(0, 142, 214, 0.4);
+        }
+        
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(7, 85, 181, 0.4);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(7, 85, 181, 0.8), 0 0 40px rgba(0, 142, 214, 0.4);
+        }
+        .btn-glow-yellow {
+            box-shadow: 0 0 15px rgba(255, 208, 41, 0.4);
+        }
+        .btn-glow-yellow:hover {
+            box-shadow: 0 0 25px rgba(255, 208, 41, 0.8), 0 0 40px rgba(255, 208, 41, 0.4);
+        }
+        .btn-glow-whatsapp {
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.5);
+        }
+        .btn-glow-whatsapp:hover {
+            box-shadow: 0 0 25px rgba(37, 211, 102, 0.9), 0 0 40px rgba(37, 211, 102, 0.5);
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .glass-panel-dark {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Decorative Backgrounds */
+        .bg-pattern {
+            background-image: radial-gradient(rgba(0, 142, 214, 0.1) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* FAQ Accordion */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out, opacity 0.4s ease-out;
+            opacity: 0;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            opacity: 1;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="font-body text-gama-profundo bg-gama-branco antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-gama-marinho/95 backdrop-blur-lg border-b border-white/10 shadow-sm"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center group">
+                    <img src="fotos/logo.jpg" alt="Colégio Gama" class="h-12 w-auto transform group-hover:scale-105 transition-transform rounded-md">
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#o-colegio" class="text-white/90 font-medium hover:text-gama-amarelo transition-colors">O Colégio</a>
+                    <a href="#etapas" class="text-white/90 font-medium hover:text-gama-amarelo transition-colors">Etapas de Ensino</a>
+                    <a href="#tecnicos" class="text-white/90 font-medium hover:text-gama-amarelo transition-colors">Técnicos & EAD</a>
+                    <a href="#vida-escolar" class="text-white/90 font-medium hover:text-gama-amarelo transition-colors">Vida Escolar</a>
+                </div>
+
+                <!-- CTA -->
+                <div class="hidden md:flex">
+                    <a href="https://wa.me/5521984809279?text=Olá!%20Gostaria%20de%20agendar%20uma%20visita%20ao%20Colégio%20Gama." target="_blank" 
+                       class="bg-gama-royal hover:bg-gama-vibrante text-gama-branco px-6 py-2.5 rounded-full font-medium transition-all hover:-translate-y-0.5 flex items-center gap-2 btn-glow">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        Fale Conosco
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white p-2" id="mobile-menu-btn" aria-label="Menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div class="md:hidden absolute top-20 left-0 w-full bg-gama-marinho border-b border-white/10 hidden shadow-lg" id="mobile-menu">
+            <div class="flex flex-col px-6 py-4 space-y-4">
+                <a href="#o-colegio" class="text-white/90 font-medium py-2 border-b border-white/10">O Colégio</a>
+                <a href="#etapas" class="text-white/90 font-medium py-2 border-b border-white/10">Etapas de Ensino</a>
+                <a href="#tecnicos" class="text-white/90 font-medium py-2 border-b border-white/10">Técnicos & EAD</a>
+                <a href="#vida-escolar" class="text-white/90 font-medium py-2">Vida Escolar</a>
+                <a href="https://wa.me/5521984809279" target="_blank" class="bg-gama-royal text-gama-branco px-6 py-3 rounded-xl font-medium text-center w-full mt-4 flex items-center justify-center gap-2 btn-glow">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    Secretaria (WhatsApp)
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-20 md:pt-32 md:pb-32 bg-gama-azulado overflow-hidden">
+        <!-- Desktop Video Background -->
+        <video autoplay loop muted playsinline class="hidden md:block absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-multiply z-0 pointer-events-none">
+            <source src="fotos/Logo_animation_of_Colégio_Gama_20261004160516.mp4" type="video/mp4">
+        </video>
+
+        <!-- Background Orbs -->
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gama-claro/30 rounded-full blur-[100px] animate-pulse-glow z-0"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gama-vibrante/10 rounded-full blur-[80px] animate-float z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="max-w-xl animate-on-scroll">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gama-branco shadow-sm border border-gama-claro/50 mb-6 animate-float-delayed">
+                        <i data-lucide="star" class="w-4 h-4 text-gama-amarelo fill-current"></i>
+                        <span class="text-sm font-medium text-gama-marinho">O melhor para o seu filho</span>
+                    </div>
+                    
+                    <h1 class="font-heading font-extrabold text-5xl md:text-6xl text-gama-marinho leading-[1.1] mb-6">
+                        Cada descoberta abre um <span class="text-gama-vibrante relative inline-block">
+                            novo futuro.
+                            <svg class="absolute w-full h-3 -bottom-1 left-0 text-gama-amarelo" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </h1>
+                    
+                    <p class="text-lg text-gama-profundo/80 mb-8 leading-relaxed">
+                        Do acolhimento na Educação Infantil à confiança para os desafios do Ensino Médio, o Colégio Gama forma cidadãos preparados e criativos em Duque de Caxias.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://wa.me/5521984809279?text=Olá!%20Gostaria%20de%20agendar%20uma%20visita." target="_blank" 
+                           class="bg-gama-royal hover:bg-gama-marinho text-gama-branco px-8 py-4 rounded-full font-medium transition-all hover:-translate-y-1 text-center text-lg btn-glow-pulse">
+                            Agendar uma visita
+                        </a>
+                        <a href="#etapas" class="bg-gama-branco hover:bg-gama-azulado text-gama-royal border-2 border-gama-royal/20 hover:border-gama-royal px-8 py-4 rounded-full font-medium transition-all text-center text-lg btn-glow-pulse">
+                            Conhecer as etapas
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="relative animate-on-scroll delay-200">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-gama-royal to-gama-vibrante rounded-3xl transform rotate-3 scale-[1.02] opacity-20 animate-float"></div>
+                    <img src="docs/imagens-site/03-fachada-entrada.jpg" alt="Fachada e entrada do Colégio Gama" class="relative rounded-3xl shadow-2xl object-cover w-full h-[500px] md:h-[600px] z-10 border-4 border-gama-branco">
+                    
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -left-6 bg-gama-amarelo text-gama-marinho p-6 rounded-2xl shadow-xl z-20 animate-float-delayed">
+                        <div class="font-heading font-bold text-3xl mb-1">18+</div>
+                        <div class="text-sm font-medium leading-tight">Anos de<br>Tradição</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Colégio -->
+    <section id="o-colegio" class="py-24 bg-gama-branco relative">
+        <div class="bg-pattern absolute inset-0 opacity-50"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative animate-on-scroll">
+                    <img src="docs/imagens-site/04-fachada-lateral.jpg" alt="Vista lateral do prédio do Colégio Gama" class="rounded-3xl shadow-lg object-cover w-full h-[400px]">
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-gama-claro rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse-glow"></div>
+                </div>
+                
+                <div class="animate-on-scroll delay-200">
+                    <h2 class="text-sm font-bold text-gama-vibrante uppercase tracking-widest mb-2">A Instituição</h2>
+                    <h3 class="font-heading font-bold text-4xl text-gama-marinho mb-6">Educação feita com cuidado e dedicação.</h3>
+                    <p class="text-gama-profundo mb-6 leading-relaxed">
+                        Situado em Duque de Caxias, o Colégio Gama constrói sua trajetória apoiada na união entre aprendizado de excelência e formação humana. Nossa estrutura foi desenvolvida para garantir que cada aluno tenha o espaço e as ferramentas certas em cada fase de sua vida escolar.
+                    </p>
+                    <p class="text-gama-profundo mb-8 leading-relaxed">
+                        Acreditamos que o ambiente escolar deve ser seguro, estimulante e familiar. Cultivamos valores essenciais e a curiosidade para transformar desafios em oportunidades reais.
+                    </p>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gama-azulado flex items-center justify-center text-gama-royal">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                            </div>
+                            <span class="font-medium">Infraestrutura acolhedora e moderna</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gama-azulado flex items-center justify-center text-gama-royal">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                            </div>
+                            <span class="font-medium">Acompanhamento próximo às famílias</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gama-azulado flex items-center justify-center text-gama-royal">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                            </div>
+                            <span class="font-medium">Valorização das descobertas diárias</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Etapas de Ensino (Institutional Dark Section) -->
+    <section id="etapas" class="py-24 bg-gama-marinho relative overflow-hidden text-gama-branco">
+        <!-- Cosmic/Dark aesthetic from Sora DS -->
+        <div class="absolute inset-0 bg-gradient-to-br from-gama-marinho via-[#0c1f38] to-[#041224]"></div>
+        <div class="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gama-royal/20 rounded-full blur-[120px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <h2 class="text-gama-claro font-semibold tracking-widest uppercase mb-2">Nossos Cursos</h2>
+                <h3 class="font-heading font-bold text-4xl md:text-5xl mb-6">Uma jornada completa.</h3>
+                <p class="text-gama-azulado/80 text-lg">
+                    Acompanhamos o desenvolvimento dos nossos alunos desde os primeiros passos até a preparação para o futuro profissional e acadêmico.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Infantil -->
+                <div class="glass-panel-dark rounded-3xl p-2 animate-on-scroll group hover:bg-white/10 transition-all duration-300 border border-white/10 relative overflow-hidden">
+                    <img src="docs/imagens-site/01-aprendizagem-educacao-infantil.jpg" alt="Alunos da Educação Infantil" class="w-full h-48 object-cover rounded-2xl mb-6">
+                    <div class="p-6 pt-0 relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-gama-royal/30 text-gama-claro flex items-center justify-center mb-6">
+                            <i data-lucide="shapes" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-heading font-bold text-2xl mb-3">Educação Infantil</h4>
+                        <p class="text-gama-branco/70 mb-6">
+                            Onde a curiosidade nasce. Um ambiente lúdico e cuidadoso que estimula as descobertas através de interações ricas e projetos criativos.
+                        </p>
+                        <a href="https://wa.me/5521984809279?text=Quero%20saber%20mais%20sobre%20a%20Educação%20Infantil" class="text-gama-amarelo font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Consultar turmas <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Fundamental -->
+                <div class="glass-panel-dark rounded-3xl p-8 animate-on-scroll delay-100 group hover:bg-white/10 transition-all duration-300 border border-white/10 relative overflow-hidden">
+                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-gama-vibrante/20 rounded-full blur-[40px]"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-gama-vibrante/30 text-gama-claro flex items-center justify-center mb-6">
+                            <i data-lucide="book-open" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-heading font-bold text-2xl mb-3">Ensino Fundamental</h4>
+                        <p class="text-gama-branco/70 mb-6">
+                            Aprofundando o conhecimento. Consolidação de saberes, pensamento crítico e experiências práticas em laboratórios e salas equipadas.
+                        </p>
+                        <a href="https://wa.me/5521984809279?text=Quero%20saber%20mais%20sobre%20o%20Ensino%20Fundamental" class="text-gama-amarelo font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Consultar séries <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Medio -->
+                <div class="glass-panel-dark rounded-3xl p-8 animate-on-scroll delay-200 group hover:bg-white/10 transition-all duration-300 border border-white/10 relative overflow-hidden">
+                    <div class="absolute -left-8 -bottom-8 w-32 h-32 bg-gama-claro/20 rounded-full blur-[40px]"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-gama-claro/20 text-gama-claro flex items-center justify-center mb-6">
+                            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-heading font-bold text-2xl mb-3">Ensino Médio</h4>
+                        <p class="text-gama-branco/70 mb-6">
+                            Preparação para grandes voos. Foco acadêmico, orientação de estudos e suporte pedagógico para enfrentar os desafios do futuro com segurança.
+                        </p>
+                        <a href="https://wa.me/5521984809279?text=Quero%20saber%20mais%20sobre%20o%20Ensino%20Médio" class="text-gama-amarelo font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Consultar valores <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursos Técnicos e EAD -->
+    <section id="tecnicos" class="py-16 bg-gama-vibrante text-gama-branco relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PHBhdGggZD0iTTM2IDM0djIwaC0ydi0yMGgtMjB2LTJoMjB2LTIwaDJ2MjBoMjB2MmgudnoiLz48L2c+PC9nPjwvc3ZnPg==')]"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-white/20 blur-[100px] rounded-full mix-blend-overlay"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10 text-center animate-on-scroll">
+            <h2 class="font-heading font-bold text-3xl mb-4">Formação Técnica e Polo EAD</h2>
+            <p class="text-lg text-gama-branco/90 max-w-2xl mx-auto mb-8">
+                Ampliando oportunidades: o Colégio Gama oferece os <strong>Cursos Técnicos em Informática e Administração</strong>. Somos também polo parceiro EAD associado à <strong>@unigama_saracuruna</strong>.
+            </p>
+            <a href="https://wa.me/5521984809279?text=Quero%20informações%20sobre%20os%20cursos%20técnicos%20e%20EAD" target="_blank" 
+               class="bg-gama-amarelo hover:bg-white text-gama-marinho px-8 py-3 rounded-full font-bold transition-all inline-flex items-center gap-2 hover:-translate-y-1 btn-glow-yellow">
+                Consulte a secretaria para requisitos e durações
+            </a>
+        </div>
+    </section>
+
+    <!-- Vida Escolar (Galeria) -->
+    <section id="vida-escolar" class="py-24 bg-gama-azulado relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 animate-on-scroll">
+                <div class="max-w-2xl">
+                    <h2 class="text-gama-royal font-bold tracking-widest uppercase mb-2">Vida Escolar</h2>
+                    <h3 class="font-heading font-bold text-4xl text-gama-marinho">Mais do que sala de aula.</h3>
+                    <p class="text-gama-profundo mt-4">A vivência no Colégio Gama envolve projetos, interações sociais e experiências ricas que ficam para sempre na memória.</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-6">
+                <!-- Large card -->
+                <div class="md:col-span-8 group relative overflow-hidden rounded-3xl animate-on-scroll h-[400px]">
+                    <img src="docs/imagens-site/02-convivencia-alunas.jpg" alt="Convivência entre alunas na escola" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gama-marinho/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <span class="bg-gama-vibrante text-white text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full mb-3 inline-block">Convivência</span>
+                        <h4 class="text-2xl font-bold text-white mb-2">Amizades que transformam</h4>
+                        <p class="text-white/80 line-clamp-2">Um ambiente pensado para a interação saudável e o desenvolvimento emocional dos nossos alunos.</p>
+                    </div>
+                </div>
+
+                <!-- Small cards -->
+                <div class="md:col-span-4 flex flex-col gap-6 animate-on-scroll delay-200">
+                    <div class="relative overflow-hidden rounded-3xl h-[188px] group">
+                        <img src="docs/imagens-site/06-passeio-fazendinha-rio.jpg" alt="Passeio escolar pedagógico" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gama-marinho/90 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h4 class="text-lg font-bold text-white">Saídas Pedagógicas</h4>
+                            <p class="text-white/70 text-sm">Exploração e contato com a natureza.</p>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-3xl h-[188px] bg-gama-marinho p-6 flex flex-col justify-end group border border-white/10">
+                        <div class="absolute inset-0 bg-[url('docs/imagens-site/05-fachada-capa-video.jpg')] opacity-20 object-cover bg-center bg-cover transition-transform duration-700 group-hover:scale-105"></div>
+                        <div class="relative z-10">
+                            <div class="w-10 h-10 rounded-full bg-gama-amarelo flex items-center justify-center text-gama-marinho mb-4 shadow-lg">
+                                <i data-lucide="microscope" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white">Projetos & Ciência</h4>
+                            <p class="text-white/70 text-sm">Laboratórios, Robótica e Feiras de Ciências.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 bg-gama-branco relative">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="font-heading font-bold text-4xl text-gama-marinho">Perguntas Frequentes</h2>
+                <p class="text-gama-profundo mt-4">Informações importantes para as famílias.</p>
+            </div>
+
+            <div class="space-y-4 animate-on-scroll delay-100">
+                <!-- FAQ 1 -->
+                <div class="faq-item border border-gama-azulado rounded-2xl p-6 cursor-pointer hover:border-gama-royal/50 transition-colors bg-white shadow-sm">
+                    <div class="flex justify-between items-center" onclick="toggleFaq(this.parentElement)">
+                        <h4 class="font-bold text-gama-marinho text-lg">Como funciona o processo de matrícula?</h4>
+                        <div class="faq-icon text-gama-royal transition-transform duration-300">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer text-gama-profundo/80">
+                        O processo de matrícula e rematrícula é conduzido diretamente por nossa secretaria. Para consultar vagas por turma, documentação necessária e a tabela de valores atual, entre em contato via WhatsApp.
+                    </div>
+                </div>
+                
+                <!-- FAQ 2 -->
+                <div class="faq-item border border-gama-azulado rounded-2xl p-6 cursor-pointer hover:border-gama-royal/50 transition-colors bg-white shadow-sm">
+                    <div class="flex justify-between items-center" onclick="toggleFaq(this.parentElement)">
+                        <h4 class="font-bold text-gama-marinho text-lg">O Colégio oferece bolsas de estudo?</h4>
+                        <div class="faq-icon text-gama-royal transition-transform duration-300">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer text-gama-profundo/80">
+                        Realizamos campanhas anuais como o Bolsão, que podem conceder bolsas mediante prova e regulamento específico. Consulte a secretaria para saber a vigência da campanha atual e quais séries são elegíveis.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item border border-gama-azulado rounded-2xl p-6 cursor-pointer hover:border-gama-royal/50 transition-colors bg-white shadow-sm">
+                    <div class="flex justify-between items-center" onclick="toggleFaq(this.parentElement)">
+                        <h4 class="font-bold text-gama-marinho text-lg">Quais são os cursos técnicos oferecidos?</h4>
+                        <div class="faq-icon text-gama-royal transition-transform duration-300">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer text-gama-profundo/80">
+                        Divulgamos ofertas para os Cursos Técnicos em Informática e Administração. A duração, disponibilidade de turmas e requisitos devem ser validados junto à equipe de atendimento.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item border border-gama-azulado rounded-2xl p-6 cursor-pointer hover:border-gama-royal/50 transition-colors bg-white shadow-sm">
+                    <div class="flex justify-between items-center" onclick="toggleFaq(this.parentElement)">
+                        <h4 class="font-bold text-gama-marinho text-lg">Como agendar uma visita?</h4>
+                        <div class="faq-icon text-gama-royal transition-transform duration-300">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer text-gama-profundo/80">
+                        Adoramos receber famílias! Basta nos chamar no WhatsApp (21) 98480-9279 para agendar o melhor horário. Faremos questão de apresentar nosso espaço e proposta pedagógica.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA & Footer -->
+    <footer class="bg-gama-marinho text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#041224] to-transparent"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-gama-vibrante/10 rounded-full blur-[100px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 pt-24 pb-12 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 border-b border-white/10 pb-16">
+                <div class="animate-on-scroll">
+                    <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 leading-tight">Venha fazer parte da nossa história.</h2>
+                    <p class="text-gama-claro mb-8 text-lg max-w-md">A equipe do Colégio Gama está pronta para receber sua família e tirar todas as dúvidas.</p>
+                    <a href="https://wa.me/5521984809279" target="_blank" 
+                       class="bg-gama-vibrante hover:bg-gama-claro hover:text-gama-marinho text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 inline-flex items-center gap-2">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        Conversar com a secretaria
+                    </a>
+                </div>
+                <div class="glass-panel-dark p-8 rounded-3xl border border-white/10 animate-on-scroll delay-200 shadow-2xl">
+                    <div class="flex flex-col gap-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-gama-amarelo"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg">Nossa Localização</h5>
+                                <p class="text-white/70 mt-1">Parque Uruguaiana, Duque de Caxias - RJ<br><span class="text-sm">(Consulte o endereço completo no atendimento)</span></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5 text-gama-amarelo"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg">Contatos</h5>
+                                <p class="text-white/70 mt-1">WhatsApp: (21) 98480-9279<br>Fixo: (21) 2773-9279</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center">
+                    <img src="fotos/logo.jpg" alt="Colégio Gama" class="h-10 w-auto rounded-md">
+                </div>
+                <div class="text-white/50 text-sm text-center md:text-left">
+                    &copy; 2026 Colégio Gama. Todos os direitos reservados.
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://www.instagram.com/gamacolegio/" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gama-vibrante hover:border-gama-vibrante transition-colors shadow-lg" aria-label="Instagram">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/5521984809279?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informações." target="_blank" aria-label="Fale conosco no WhatsApp"
+       class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#128C7E] text-white p-4 rounded-full transform hover:scale-110 transition-all duration-300 flex items-center justify-center group btn-glow-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+        </svg>
+        <span class="absolute right-full mr-3 whitespace-nowrap bg-white text-[#172B45] font-semibold text-sm px-4 py-2 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            Fale com a gente!
+        </span>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        try {
+            lucide.createIcons();
+        } catch(e) {
+            console.error("Lucide icons failed to load", e);
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Stop observing once animated
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Toggle functionality
+        function toggleFaq(element) {
+            // Close others
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(item => {
+                if(item !== element) {
+                    item.classList.remove('active');
+                }
+            });
+            // Toggle current
+            element.classList.toggle('active');
+        }
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Navbar effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+{
+ "entryUrl": "https://sora-finance.aura.build/",
+ "capturedAt": "2026-09-25T20:52:07+00:00",
+ "indexHtml": {
+  "kind": "arquivo",
+  "description": "site vivo aberto com duplo clique (file://): um runtime faz o papel do Service Worker; imagens e vídeos que a página só exibe são lidos de assets/, o resto (CSS, JS, fontes, dados, imagens de WebGL) vai embutido no index.html"
+ },
+ "files": [
+  {
+   "url": "https://sora-finance.aura.build/favicon.ico",
+   "file": "assets/sora-finance.aura.build/favicon.ico",
+   "type": "image/vnd.microsoft.icon",
+   "resourceType": "other",
+   "size": 696,
+   "status": 200,
+   "party": "first",
+   "passes": [
+    "desktop"
+   ]
+  },
+  {
+   "url": "https://sora-finance.aura.build/",
+   "file": "assets/sora-finance.aura.build/index.html",
+   "type": "text/html",
+   "resourceType": "document",
+   "size": 82047,
+   "status": 200,
+   "party": "first",
+   "passes": [
+    "desktop"
+   ]
+  },
+  {
+   "url": "https://assets.unicorn.studio/images/7b9RUDblFTeXAfGKWnhAYTv9FVO2/sourasith_A_close-up_of_the_edge_and_surface_of_an_illuminate_62092844-85e6-4036-96b6-ef49f30a7ea7_1.png",
+   "file": "assets/assets.unicorn.studio/images/7b9RUDblFTeXAfGKWnhAYTv9FVO2/sourasith_A_close-up_of_the_edge_and_surface_of_an_illuminate_62092844-85e6-4036_04872a04.png",
+   "type": "image/png",
+   "resourceType": "image",
+   "size": 154741,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ]
+  },
+  {
+   "url": "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",
+   "file": "assets/cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",
+   "type": "application/javascript",
+   "resourceType": "script",
+   "size": 155629,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ],
+   "library": {
+    "name": "unicornstudio",
+    "version": null
+   },
+   "role": "library"
+  },
+  {
+   "url": "https://cdn.tailwindcss.com/3.4.17",
+   "file": "assets/cdn.tailwindcss.com/3.4.17.js",
+   "type": "text/javascript",
+   "resourceType": "script",
+   "size": 407279,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ],
+   "library": {
+    "name": "tailwindcss (Play CDN)",
+    "version": "3.4.17"
+   },
+   "role": "library"
+  },
+  {
+   "url": "https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap",
+   "file": "assets/fonts.googleapis.com/css2__qa4cd1a53.css",
+   "type": "text/css",
+   "resourceType": "stylesheet",
+   "size": 9130,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ],
+   "role": "third-party"
+  },
+  {
+   "url": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
+   "file": "assets/fonts.googleapis.com/css2__qc92705f1.css",
+   "type": "text/css",
+   "resourceType": "stylesheet",
+   "size": 12535,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ],
+   "role": "third-party"
+  },
+  {
+   "url": "https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2",
+   "file": "assets/fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2",
+   "type": "font/woff2",
+   "resourceType": "font",
+   "size": 29288,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ]
+  },
+  {
+   "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+   "file": "assets/fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+   "type": "font/woff2",
+   "resourceType": "font",
+   "size": 48432,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ]
+  },
+  {
+   "url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/46c13ea9-07a0-49a5-adef-0c501a634106_320w.png",
+   "file": "assets/hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/46c13ea9-07a0-49a5-adef-0c501a634106_320w.png",
+   "type": "image/png",
+   "resourceType": "image",
+   "size": 27269,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ]
+  },
+  {
+   "url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/de332db2-c007-4452-a139-bbc3c3436c76_800w.webp",
+   "file": "assets/hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/de332db2-c007-4452-a139-bbc3c3436c76_800w.webp",
+   "type": "image/webp",
+   "resourceType": "image",
+   "size": 24088,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ]
+  },
+  {
+   "url": "https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80",
+   "file": "assets/images.unsplash.com/photo-1621619856624-42fd193a0661__q79c2ab7c.jpg",
+   "type": "image/jpeg",
+   "resourceType": "image",
+   "size": 37413,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ]
+  },
+  {
+   "url": "https://storage.googleapis.com/unicornstudio-production/embeds/BhoqrigscYbD7NN1fwcp?v=1790369540661",
+   "file": "assets/storage.googleapis.com/unicornstudio-production/embeds/BhoqrigscYbD7NN1fwcp__qdefaf10a.js",
+   "type": "text/javascript",
+   "resourceType": "fetch",
+   "size": 34756,
+   "status": 200,
+   "party": "third",
+   "passes": [
+    "desktop"
+   ],
+   "library": {
+    "name": "unicornstudio",
+    "version": null
+   },
+   "role": "library"
+  }
+ ]
+}

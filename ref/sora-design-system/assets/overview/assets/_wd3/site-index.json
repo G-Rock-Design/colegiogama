@@ -1,0 +1,358 @@
+{
+ "version": 1,
+ "tool": "wd3 0.1.0",
+ "captureId": "sora-finance.aura.build-da1b7441",
+ "capturedAt": "2026-09-25T20:52:07+00:00",
+ "entry": {
+  "url": "https://sora-finance.aura.build/",
+  "path": "/",
+  "search": "",
+  "file": "assets/sora-finance.aura.build/index.html",
+  "contentType": "text/html; charset=utf-8"
+ },
+ "blocked": [
+  "^https?://([^/?#]+\\.)?(google\\-analytics\\.com|analytics\\.google\\.com|googletagmanager\\.com|googleadservices\\.com|doubleclick\\.net|googlesyndication\\.com|googleoptimize\\.com|connect\\.facebook\\.net|bat\\.bing\\.com|snap\\.licdn\\.com|px\\.ads\\.linkedin\\.com|analytics\\.tiktok\\.com|ct\\.pinterest\\.com|static\\.ads\\-twitter\\.com|analytics\\.twitter\\.com|tr\\.snapchat\\.com|sc\\-static\\.net|mc\\.yandex\\.ru|hotjar\\.com|hotjar\\.io|clarity\\.ms|cdn\\.segment\\.com|api\\.segment\\.io|cdn\\.mxpnl\\.com|api\\-js\\.mixpanel\\.com|api\\.mixpanel\\.com|api\\.amplitude\\.com|api2\\.amplitude\\.com|api\\-secure\\.amplitude\\.com|api\\-sr\\.amplitude\\.com|sr\\-client\\-cfg\\.amplitude\\.com|plausible\\.io|cloud\\.umami\\.is|analytics\\.umami\\.is|static\\.cloudflareinsights\\.com|cloudflareinsights\\.com|vitals\\.vercel\\-insights\\.com|browser\\-intake\\-datadoghq\\.com|browser\\-intake\\-datadoghq\\.eu|js\\-agent\\.newrelic\\.com|bam\\.nr\\-data\\.net|bam\\-cell\\.nr\\-data\\.net|fullstory\\.com|script\\.crazyegg\\.com|mouseflow\\.com|smartlook\\.com|heapanalytics\\.com|i\\.posthog\\.com|stats\\.wp\\.com|pixel\\.wp\\.com|promotekit\\.com|ingest\\.sentry\\.io|ingest\\.us\\.sentry\\.io|ingest\\.de\\.sentry\\.io|widget\\.intercom\\.io|js\\.intercomcdn\\.com|api\\-iam\\.intercom\\.io|js\\.hs\\-scripts\\.com|js\\.hs\\-analytics\\.net|js\\.hs\\-banner\\.com|js\\.hscollectedforms\\.net|js\\.usemessages\\.com|track\\.hubspot\\.com|client\\.crisp\\.chat|embed\\.tawk\\.to|js\\.driftt\\.com|static\\.zdassets\\.com|ekr\\.zdassets\\.com|cdn\\.cookielaw\\.org|geolocation\\.onetrust\\.com|consent\\.cookiebot\\.com|consentcdn\\.cookiebot\\.com|app\\.usercentrics\\.eu|api\\.usercentrics\\.eu|cdn\\.iubenda\\.com|cmp\\.osano\\.com|cdn\\.termly\\.io)(:\\d+)?([/?#]|$)",
+  "/rpc/increment_shared_code_views",
+  "^https?://(umami|analytics|stats|plausible)\\.[^/]+/(api/send|api/collect|api/event|script\\.js)",
+  "/g/c(ollect)?\\?v=2&",
+  "sentry\\.io/api/\\d+/(envelope|store)",
+  "/api/meta-capi",
+  "^https?://(leadtracker|tracking|track|events?|collect)\\.[^/]+/",
+  "^https?://a\\.vturb\\.com/",
+  "facebook\\.com/tr[/?]",
+  "/_vercel/(speed-)?insights/",
+  "/cdn-cgi/rum",
+  "/cdn-cgi/challenge-platform/",
+  "google\\.com/(pagead|ads)/"
+ ],
+ "volatileParams": [
+  "v",
+  "_rsc",
+  "dpl",
+  "_",
+  "t",
+  "ts",
+  "timestamp",
+  "cb",
+  "cachebust",
+  "cacheBust",
+  "nocache",
+  "rnd",
+  "rand",
+  "random",
+  "_t"
+ ],
+ "entries": [
+  {
+   "url": "https://sora-finance.aura.build/",
+   "method": "GET",
+   "status": 200,
+   "contentType": "text/html; charset=utf-8",
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "resourceType": "document",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/sora-finance.aura.build/index.html",
+   "size": 82047
+  },
+  {
+   "url": "https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80",
+   "method": "GET",
+   "status": 200,
+   "contentType": "image/jpeg",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "content-type": "image/jpeg",
+    "timing-allow-origin": "*",
+    "x-imgix-id": "07c6facde9fc680f97977ec323f852669508031d"
+   },
+   "resourceType": "image",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/images.unsplash.com/photo-1621619856624-42fd193a0661__q79c2ab7c.jpg",
+   "size": 37413,
+   "modes": [
+    "no-cors"
+   ]
+  },
+  {
+   "url": "https://cdn.tailwindcss.com/",
+   "method": "GET",
+   "status": 302,
+   "contentType": "",
+   "headers": {
+    "location": "/3.4.17"
+   },
+   "resourceType": "script",
+   "passes": [
+    "desktop"
+   ],
+   "size": 0,
+   "redirect": "https://cdn.tailwindcss.com/3.4.17",
+   "modes": [
+    "no-cors"
+   ]
+  },
+  {
+   "url": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
+   "method": "GET",
+   "status": 200,
+   "contentType": "text/css; charset=utf-8",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "content-type": "text/css; charset=utf-8",
+    "link": "<https://fonts.gstatic.com>; rel=preconnect; crossorigin",
+    "timing-allow-origin": "*"
+   },
+   "resourceType": "stylesheet",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/fonts.googleapis.com/css2__qc92705f1.css",
+   "size": 12535,
+   "modes": [
+    "no-cors"
+   ]
+  },
+  {
+   "url": "https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap",
+   "method": "GET",
+   "status": 200,
+   "contentType": "text/css; charset=utf-8",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "content-type": "text/css; charset=utf-8",
+    "link": "<https://fonts.gstatic.com>; rel=preconnect; crossorigin",
+    "timing-allow-origin": "*"
+   },
+   "resourceType": "stylesheet",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/fonts.googleapis.com/css2__qa4cd1a53.css",
+   "size": 9130,
+   "modes": [
+    "no-cors"
+   ]
+  },
+  {
+   "url": "https://cdn.tailwindcss.com/3.4.17",
+   "method": "GET",
+   "status": 200,
+   "contentType": "text/javascript",
+   "headers": {
+    "content-type": "text/javascript"
+   },
+   "resourceType": "script",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/cdn.tailwindcss.com/3.4.17.js",
+   "size": 407279,
+   "modes": [
+    "no-cors"
+   ]
+  },
+  {
+   "url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/de332db2-c007-4452-a139-bbc3c3436c76_800w.webp",
+   "method": "GET",
+   "status": 200,
+   "contentType": "image/webp",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "content-type": "image/webp",
+    "priority": "u=2,i",
+    "sb-gateway-mode": "direct",
+    "sb-gateway-version": "1",
+    "sb-project-ref": "hoirqrkdgbmvpwutwuwj",
+    "sb-request-id": "01a0da57-2512-72ae-afbf-90a8c39fcdb4",
+    "x-robots-tag": "none",
+    "x-smart-cdn": "true"
+   },
+   "resourceType": "image",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/de332db2-c007-4452-a139-bbc3c3436c76_800w.webp",
+   "size": 24088,
+   "modes": [
+    "no-cors"
+   ]
+  },
+  {
+   "url": "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",
+   "method": "GET",
+   "status": 200,
+   "contentType": "application/javascript; charset=utf-8",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "*",
+    "content-type": "application/javascript; charset=utf-8",
+    "timing-allow-origin": "*",
+    "x-jsd-version": "1.4.29",
+    "x-jsd-version-type": "version"
+   },
+   "resourceType": "script",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",
+   "size": 155629,
+   "modes": [
+    "no-cors"
+   ]
+  },
+  {
+   "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+   "method": "GET",
+   "status": 200,
+   "contentType": "font/woff2",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "content-type": "font/woff2",
+    "timing-allow-origin": "*"
+   },
+   "resourceType": "font",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+   "size": 48432,
+   "modes": [
+    "cors"
+   ]
+  },
+  {
+   "url": "https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2",
+   "method": "GET",
+   "status": 200,
+   "contentType": "font/woff2",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "content-type": "font/woff2",
+    "timing-allow-origin": "*"
+   },
+   "resourceType": "font",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2",
+   "size": 29288,
+   "modes": [
+    "cors"
+   ]
+  },
+  {
+   "url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/46c13ea9-07a0-49a5-adef-0c501a634106_320w.png",
+   "method": "GET",
+   "status": 200,
+   "contentType": "image/png",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "content-type": "image/png",
+    "priority": "u=3,i",
+    "sb-gateway-mode": "direct",
+    "sb-gateway-version": "1",
+    "sb-project-ref": "hoirqrkdgbmvpwutwuwj",
+    "sb-request-id": "01a0da57-25ca-726e-839c-7f72d0d3dc8a",
+    "x-robots-tag": "none",
+    "x-smart-cdn": "true"
+   },
+   "resourceType": "image",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/46c13ea9-07a0-49a5-adef-0c501a634106_320w.png",
+   "size": 27269,
+   "modes": [
+    "no-cors"
+   ]
+  },
+  {
+   "url": "https://storage.googleapis.com/unicornstudio-production/embeds/BhoqrigscYbD7NN1fwcp?v=1790369540661",
+   "method": "GET",
+   "status": 200,
+   "contentType": "text/javascript",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "Content-Length, Content-Type, Date, ETag, If-None-Match, Server, Transfer-Encoding, X-GUploader-UploadID, X-Google-Trace",
+    "content-type": "text/javascript",
+    "x-goog-generation": "1762824696562833",
+    "x-goog-hash": "crc32c=/077/w==, md5=bf3dzyvDNcNvu1JxYZDWOA==",
+    "x-goog-metageneration": "2",
+    "x-goog-storage-class": "STANDARD",
+    "x-goog-stored-content-encoding": "identity",
+    "x-goog-stored-content-length": "34756",
+    "x-guploader-uploadid": "AP6rU83fQbpZnfP2nzqu50i0ZFLUWg8xO7ughXbutCKyB7kGIGd0XCQvKBnQDZ3UkJaADJ4PFUoFyQq-ZVikOg"
+   },
+   "resourceType": "fetch",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/storage.googleapis.com/unicornstudio-production/embeds/BhoqrigscYbD7NN1fwcp__qdefaf10a.js",
+   "size": 34756,
+   "modes": [
+    "cors"
+   ]
+  },
+  {
+   "url": "https://assets.unicorn.studio/images/7b9RUDblFTeXAfGKWnhAYTv9FVO2/sourasith_A_close-up_of_the_edge_and_surface_of_an_illuminate_62092844-85e6-4036-96b6-ef49f30a7ea7_1.png",
+   "method": "GET",
+   "status": 200,
+   "contentType": "image/png",
+   "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "Content-Length, Content-Type, Date, ETag, If-None-Match, Server, Transfer-Encoding, X-GUploader-UploadID, X-Google-Trace",
+    "content-type": "image/png",
+    "x-goog-generation": "1762822906013021",
+    "x-goog-hash": "crc32c=VWkh0g==, md5=mBJCqxW/fGd8dOGOhyCmMg==",
+    "x-goog-metageneration": "1",
+    "x-goog-storage-class": "STANDARD",
+    "x-goog-stored-content-encoding": "identity",
+    "x-goog-stored-content-length": "154741",
+    "x-guploader-uploadid": "AP6rU83pgfxJy4g19i9wu8mGsUkKQju_kEeeS4hMT3XQnSripEQmb8IREZdZ43culmnO5u8TQbN15iA"
+   },
+   "resourceType": "image",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/assets.unicorn.studio/images/7b9RUDblFTeXAfGKWnhAYTv9FVO2/sourasith_A_close-up_of_the_edge_and_surface_of_an_illuminate_62092844-85e6-4036_04872a04.png",
+   "size": 154741,
+   "modes": [
+    "cors"
+   ]
+  },
+  {
+   "url": "https://sora-finance.aura.build/favicon.ico",
+   "method": "GET",
+   "status": 200,
+   "contentType": "image/vnd.microsoft.icon",
+   "headers": {
+    "cache-status": "\"Netlify Edge\"; fwd=miss; fwd-status=200; stored",
+    "content-type": "image/vnd.microsoft.icon",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "x-nf-request-id": "01M3D5GSBM7WGD0Q8YA9KEG6FY"
+   },
+   "resourceType": "other",
+   "passes": [
+    "desktop"
+   ],
+   "file": "assets/sora-finance.aura.build/favicon.ico",
+   "size": 696
+  }
+ ],
+ "adapter": {
+  "name": "aura-html",
+  "notes": [
+   "site extraído do iframe srcdoc; 3 scripts do Aura removidos"
+  ]
+ },
+ "videos": {
+  "posters": {},
+  "onlineHosts": []
+ }
+}
